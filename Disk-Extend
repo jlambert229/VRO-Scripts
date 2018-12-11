@@ -1,0 +1,45 @@
+System.log("**********************");
+///--------------------------------------------------
+
+//
+
+var devices = vm.config.hardware.device;
+for (i in devices){
+    if (devices[i].DeviceInfo.Label.indexOf('Hard disk') >= 0){    
+		if (devices[i].Backing.uuid == diskUuid)
+            var capacityGB = devices[i].capacityInKB / 1024 / 1024;
+            var description = devices[i].deviceInfo.label + "-" + capacityGB + " GB";
+           	var label = devices[i].deviceInfo.label ;
+			System.log("print label of disk: " + label);
+        }
+} 
+
+System.log("current label " + label);
+System.log("**********************");
+System.log("diskString = " + diskString);
+System.log("**********************");
+var devices = vm.config.hardware.device;
+
+for (i in devices){
+    if (devices[i].deviceInfo.label == diskString){
+        var disk = devices[i]
+        System.log("Disk = " + disk.deviceInfo.label)
+    }
+}
+
+var newSizeKB = disk.capacityInKB + (increaseSizeGB * 1024 * 1024)
+var newSizeGB = (disk.capacityInKB * 1024 * 1024)
+System.log("**********************");
+System.log("New Size of " + disk.deviceInfo.label + " = " + newSizeGB + "GB")
+System.log("**********************");
+
+var spec = new VcVirtualMachineConfigSpec();
+spec.changeVersion = vm.config.changeVersion;
+var deviceChanges = new Array();
+var deviceChange = new VcVirtualDeviceConfigSpec();
+deviceChange.operation = VcVirtualDeviceConfigSpecOperation.edit;
+deviceChange.device = disk;
+deviceChange.device.capacityInKB = newSizeKB;
+deviceChanges.push(deviceChange);
+spec.deviceChange = deviceChanges
+//actionResult= vm.reconfigVM_Task(spec);
