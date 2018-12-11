@@ -1,3 +1,10 @@
+
+psUuid = "6000C29503DEA0697F623D69DA2EF0D9"
+var upper = psUuid;
+var lower = upper.toLowerCase();
+var diskUuid = lower.replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, "$1-$2-$3-$4-$5");
+System.log("**********************");
+System.log("logging converted Disk UUID " + diskUuid);
 System.log("**********************");
 ///--------------------------------------------------
 
